@@ -2,6 +2,11 @@
 #define MYWIDGET_H
 
 #include <QWidget>
+#include <QFile>
+#include <QTextStream>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,6 +29,8 @@ private slots:
     void on_insertButton_clicked();
 
     void on_exportButton_clicked();
+
+    void on_importButton_clicked();
 
 private:
     Ui::myWidget *ui;

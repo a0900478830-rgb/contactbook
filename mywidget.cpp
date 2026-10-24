@@ -30,6 +30,7 @@ myWidget::myWidget(QWidget *parent)
     QStringList ColTotal;
     ColTotal<<"學號"<<"班級"<<"姓名"<<"電話";
     ui->contactbook->setHorizontalHeaderLabels(ColTotal);
+    ui->contactbook->setRowCount(0);
 }
 
 myWidget::~myWidget()
@@ -72,7 +73,7 @@ void myWidget::on_exportButton_clicked()
 {
     QString fileName;
     QString saveStr;
-    fileName == QFileDialog::getSaveFileName(this,"匯出通訊錄",".","csv(*.csv)::txt(*.txt)");
+    fileName = QFileDialog::getSaveFileName(this,"匯出通訊錄",".","csv(*.csv);;txt(*.txt)");
 
     for(int i=0;i<ui->contactbook->rowCount();i++)
     {
@@ -85,5 +86,42 @@ void myWidget::on_exportButton_clicked()
     }
     CbWrite(fileName,saveStr);
 
+}
+
+
+void myWidget::on_importButton_clicked()
+{
+    QString filePath = QFileDialog::getOpenFileName(
+        this,
+        tr("選擇匯入的 CSV 檔案"),
+        "",
+        tr("CSV 檔案 (*.csv);;所有檔案 (*.*)")
+        );
+    qDebug() << "目前選擇的路徑為：" << filePath;
+    if (filePath.isEmpty()) {
+        return;
+    }
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, tr("錯誤"), tr("無法開啟選擇的檔案！"));
+        return;
+    }
+    QTextStream in(&file);
+    ui->contactbook->setRowCount(0);
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.isEmpty()) continue;
+        QStringList rowData = line.split(",");
+        int row = ui->contactbook->rowCount();
+        ui->contactbook->insertRow(row);
+
+        // 將切割出來的欄位填入表格各欄
+        for (int col = 0; col < rowData.size(); ++col) {
+            ui->contactbook->setItem(row, col, new QTableWidgetItem(rowData[col].trimmed()));
+        }
+    }
+
+    file.close();
+    QMessageBox::information(this, tr("成功"), tr("資料已順利匯入！"));
 }
 

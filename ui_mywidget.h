@@ -41,9 +41,10 @@ public:
     QLabel *label_4;
     QGridLayout *gridLayout;
     QPushButton *exportButton;
-    QSpacerItem *horizontalSpacer;
     QPushButton *insertButton;
+    QSpacerItem *horizontalSpacer;
     QSpacerItem *horizontalSpacer_2;
+    QPushButton *importButton;
 
     void setupUi(QWidget *myWidget)
     {
@@ -114,18 +115,23 @@ public:
 
         gridLayout->addWidget(exportButton, 0, 2, 1, 1);
 
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
-
-        gridLayout->addItem(horizontalSpacer, 0, 0, 1, 1);
-
         insertButton = new QPushButton(myWidget);
         insertButton->setObjectName("insertButton");
 
         gridLayout->addWidget(insertButton, 0, 1, 1, 1);
 
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        gridLayout->addItem(horizontalSpacer, 0, 0, 1, 1);
+
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
-        gridLayout->addItem(horizontalSpacer_2, 0, 3, 1, 1);
+        gridLayout->addItem(horizontalSpacer_2, 0, 4, 1, 1);
+
+        importButton = new QPushButton(myWidget);
+        importButton->setObjectName("importButton");
+
+        gridLayout->addWidget(importButton, 0, 3, 1, 1);
 
 
         verticalLayout->addLayout(gridLayout);
@@ -145,6 +151,7 @@ public:
         label_4->setText(QCoreApplication::translate("myWidget", "\351\233\273\350\251\261:", nullptr));
         exportButton->setText(QCoreApplication::translate("myWidget", "\345\214\257\345\207\272", nullptr));
         insertButton->setText(QCoreApplication::translate("myWidget", "\346\226\260\345\242\236", nullptr));
+        importButton->setText(QCoreApplication::translate("myWidget", "\345\214\257\345\205\245", nullptr));
     } // retranslateUi
 
 };
